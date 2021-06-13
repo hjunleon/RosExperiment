@@ -1,0 +1,2 @@
+
+-DCATKIN_DEVEL_PREFIX=/home/ubuntu/catkin_ws/src/ufm_simulation/ufm_gazebo/devel -DCMAKE_INSTALL_PREFIX=/home/ubuntu/catkin_ws/src/ufm_simulation/ufm_gazebo/install -G Unix Makefiles

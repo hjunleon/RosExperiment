@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+<launch>
+  <arg name="paused" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+  <arg name="verbose" default="false"/>
+  <arg name="world_name" default="$(find ufm_gazebo)/worlds/weirdBuilding.world"/>
+  <arg name="modelType" default="urdf" />
+  <arg name="model" default="ufm"/>
+
+  <!-- Start gazebo and load the world -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch" >
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    <arg name="gui" value="$(arg gui)"/>
+    <arg name="headless" value="$(arg headless)"/>
+    <arg name="debug" value="$(arg debug)"/>
+    <arg name="verbose" value="$(arg verbose)"/>
+    <arg name="world_name" value="$(arg world_name)"/>
+  </include>  <!--$(find ufm_gazebo)/models/UFMWithCameras/model.sdf-->  <!--$(find ufm_gazebo)/models/testingModel1/model.sdf-->
+  <!-- <node name="spawn_$(arg modelType)" pkg="gazebo_ros" type="spawn_model" args="-file $(find ufm_gazebo)/models/UFMWithCameras/model.sdf -$(arg modelType) -model $(arg model)" /> -->
+  
+  <arg name="gpu" default="false"/>
+  <arg name="organize_cloud" default="false"/>
+  <param name="robot_description" command="$(find xacro)/xacro.py '$(find ufm_description)/urdf/ufm.urdf.xacro' organize_cloud:=$(arg organize_cloud) gpu:=$(arg gpu)" />
+  <node name="spawn_$(arg modelType)" pkg="gazebo_ros" type="spawn_model" args="-param /robot_description -$(arg modelType) -model $(arg model)" />
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+    <param name="publish_frequency" type="double" value="30.0" />
+  </node>
+  <!-- <node name="spawn_$(arg modelType)" pkg="gazebo_ros" type="spawn_model" args="-file '$(find ufm_description)/urdf/ufm.urdf.xacro' -$(arg modelType) -model $(arg model)" /> -->
+  
+
+</launch>

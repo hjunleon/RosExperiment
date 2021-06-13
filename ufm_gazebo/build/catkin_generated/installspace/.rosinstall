@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/ubuntu/catkin_ws/src/ufm_simulation/ufm_gazebo/install/setup.sh
